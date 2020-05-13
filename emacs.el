@@ -13,11 +13,27 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ;;
 
+
+;;
+;; MS-Windows Emacs runemacs.bat
+;;
+;; @echo off
+;; REM call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools\VsDevCmd.bat"
+;; call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
+;; C:\Users\FRAGO_1\emacs-26.3-x86_64\bin\runemacs.exe
+;;
+
+
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
 (package-initialize)
+
+;;
+;; Use MELP package repository.
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -29,10 +45,17 @@
  '(global-lh-line-mode t)
  '(global-linenum-mode t)
  '(global-linum-mode t)
+ ;; Home
  '(package-selected-packages (quote (cmake-font-lock elgrep cmake-mode)))
+ ;; Work
+ ;; '(package-selected-packages
+ ;;   (quote
+ ;;    (groovy-mode yaml-mode tabbar session pod-mode muttrc-mode mutt-alias markdown-mode initsplit htmlize graphviz-dot-mode folding eproject diminish csv-mode browse-kill-ring boxquote bm bar-cursor apache-mode)))
  '(show-paren-mode t)
  '(size-indication-mode t)
- '(tool-bar-mode nil))
+ '(tool-bar-mode nil)
+ '(speedbar-use-images nil)
+ )
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -43,17 +66,8 @@
  '(hl-line ((t (:inherit highlight :background "grey15"))))
  '(region ((t (:background "DodgerBlue4")))))
 
-;;
-;; MS-Windows Emacs runemacs.bat
-;;
-;; @echo off
-;; REM call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools\VsDevCmd.bat"
-;; call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
-;; C:\Users\FRAGO_1\emacs-26.3-x86_64\bin\runemacs.exe
-;;
-
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+;; Remove trailing whitespaces when saving.
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;;
 ;; OS specific settings.
@@ -61,27 +75,58 @@
  ;;
  ;; MS-Windows
  ((eq system-type 'windows-nt)
-  (custom-set-faces '(default ((t (:foundry "outline" :family "Consolas" :height 100)))))
-  ;; (setenv "PATH"
-  ;; 	  (concat (getenv "PATH")
-  ;; 		  ; ";C:\\Program Files\\JetBrains\\CLion 2019.3.3\\bin\\cmake\\win\\bin"
-  ;; 		  ";C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin"
-  ;; 		  ";C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\Ninja"
-  ;; 		  ";C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\VC\\Tools\\MSVC\\14.16.27023\\bin\\Hostx64\\x64"))
+  (custom-set-faces '(default ((t (:foundry "outline" :family "Consolas")))))
+  (setenv "PATH"
+  	  (concat (getenv "PATH")
+		  ";<DIR>"
+		  )
+	  )
   )
  ;;
  ;; GNU/Linux
  ((eq system-type 'gnu/linux)
-  nil
+  ;;
+  ;; 2020-05-05: https://www.emacswiki.org/emacs/GnuGlobal
+  (defun gtags-root-dir ()
+    "Returns GTAGS root directory or nil if doesn't exist."
+    (with-temp-buffer
+      (if (zerop (call-process "global" nil t nil "-pr"))
+          (buffer-substring (point-min) (1- (point-max)))
+        nil)))
+  ;;
+  (defun gtags-update ()
+    "Make GTAGS incremental update"
+    (call-process "global" nil nil nil "-u")
+    )
+  ;;
+  (defun gtags-update-single(filename)
+    "Update Gtags database for changes in a single file"
+    (interactive)
+    (start-process "update-gtags"
+		   "update-gtags"
+		   "bash" "-c" (concat "cd " (gtags-root-dir) " ; gtags --single-update " filename )))
+  ;;
+  (defun gtags-update-current-file()
+    (interactive)
+    (defvar filename)
+    (setq filename
+	  (replace-regexp-in-string (gtags-root-dir) "." (buffer-file-name (current-buffer))))
+    (gtags-update-single filename)
+    (message "Gtags updated for '%s'." filename))
+  ;;
+  (defun gtags-update-hook ()
+    (when (and gtags-mode (gtags-root-dir))
+      (gtags-update)
+      ;; (gtags-update-current-file) ;; Doesn't work for some unknown reason.
+      )
+    )
+  ;;
+  (add-hook 'after-save-hook 'gtags-update-hook)
   )
  ;;
  ;; Default
  (t nil)
  )
-
-
-;; Remove trailing whitespaces when saving.
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;;
 ;; Coding-style: SAT
@@ -116,10 +161,6 @@
  ;; Based on C+-style 'stroustrup'
  '("stroustrup"
    ;;
-   ;; Amount of basic offset.
-   ;; Offset by 2 characters
-   (c-basic-offset . 4)
-   ;;
    (c-offsets-alist
     ;;
     ;; Inside multi-line strings.
@@ -129,24 +170,6 @@
     ;; The construct is nested inside a namspace definition.
     ;; Do not offset lines nested between curly-braces of a namespace definition.
     (innamespace . -)
-    ;;
-    ;; Brace that opens an in-class inline method.
-    ;; Do not offset curly-braces under a header-file inline function definition.
-    ; (inline-open . 0)
-    ;;
-    ;; The brace that open a substatement block.
-    ; (substatement-open . +)
-    ;;
-    ;; The first line in a new statement block.
-    ; (statement-block-intro . 0)
-    ;;
-    ;; The first line in an argument list.
-    ;; GNU Emacs default value.
-    ;; (arglist-intro . +)
-    ;;
-    ;; The solo close paren of an argument list.
-    ; (arglist-close . 0)
-    ;;
     )
    )
  )
@@ -215,6 +238,8 @@
              (c-set-style "sat")
              ;; (c-set-style "geown")
              (turn-on-auto-fill)
+	     (imenu-add-menubar-index)
+	     (gtags-mode t)
              ) ) )
 
 ;;
