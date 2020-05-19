@@ -41,6 +41,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
+ '(tab-width 4)
  '(global-hl-line-mode t)
  '(global-lh-line-mode t)
  '(global-linenum-mode t)
@@ -238,8 +239,8 @@
              (c-set-style "sat")
              ;; (c-set-style "geown")
              (turn-on-auto-fill)
-	     (imenu-add-menubar-index)
-	     (gtags-mode t)
+			 (imenu-add-menubar-index)
+			 (gtags-mode t)
              ) ) )
 
 ;;
