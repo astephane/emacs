@@ -77,6 +77,7 @@
  ;;
  ;; MS-Windows
  ((eq system-type 'windows-nt)
+  (setq prefer-coding-system 'utf-8)
   (custom-set-faces '(default ((t (:foundry "outline" :family "Consolas")))))
   ;; https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-windows
   (defun git-bash () (interactive)
