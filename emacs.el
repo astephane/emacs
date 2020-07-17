@@ -78,11 +78,17 @@
  ;; MS-Windows
  ((eq system-type 'windows-nt)
   (custom-set-faces '(default ((t (:foundry "outline" :family "Consolas")))))
-  (setenv "PATH"
-  	  (concat (getenv "PATH")
-		  ";<DIR>"
-		  )
-	  )
+  ;; https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-windows
+  (defun git-bash () (interactive)
+	 (let ((explicit-shell-file-name "C:/Program Files/Git/bin/bash.exe")
+	       (explicit-bash.exe-args '("--login" "-i"))
+	       (shell-command-switch "-m"))
+	   (call-interactively 'shell)))
+  ;; (setenv "PATH"
+  ;; 	  (concat (getenv "PATH")
+  ;; 		  ";<DIR>"
+  ;; 		  )
+  ;; 	  )
   )
  ;;
  ;; GNU/Linux
