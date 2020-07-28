@@ -20,7 +20,7 @@
 ;; @echo off
 ;; REM call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools\VsDevCmd.bat"
 ;; call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
-;; C:\Users\FRAGO_1\emacs-26.3-x86_64\bin\runemacs.exe
+;; C:\Users\FOO\emacs-26.3-x86_64\bin\runemacs.exe
 ;;
 
 
@@ -43,6 +43,7 @@
  '(column-number-mode t)
  ;; '(cmake-tab-width 4)
  '(tab-width 4)
+ '(gdb-many-windows t)
  '(global-hl-line-mode t)
  '(global-lh-line-mode t)
  '(global-linenum-mode t)
