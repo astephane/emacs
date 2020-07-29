@@ -42,7 +42,7 @@
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
  ;; '(cmake-tab-width 4)
- '(tab-width 4)
+ ;; '(tab-width 4)
  '(gdb-many-windows t)
  '(global-hl-line-mode t)
  '(global-lh-line-mode t)
@@ -250,6 +250,8 @@
              (turn-on-auto-fill)
 			 (imenu-add-menubar-index)
 			 (gtags-mode t)
+             ;;
+             (add-to-list 'c-noise-macro-names "[:space:].+_EXPORT[:space:]")
              ) ) )
 
 ;;
