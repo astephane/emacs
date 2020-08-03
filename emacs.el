@@ -244,15 +244,15 @@
 (add-hook
  'c++-mode-hook
  (function (lambda ()
-             ;; (c-set-style "itk")
-             (c-set-style "sat")
-             ;; (c-set-style "geown")
-             (turn-on-auto-fill)
-			 (imenu-add-menubar-index)
-			 (gtags-mode t)
-             ;;
-             (add-to-list 'c-noise-macro-names "[:space:].+_EXPORT[:space:]")
-             ) ) )
+	     ;; (c-set-style "itk")
+	     (c-set-style "sat")
+	     ;; (c-set-style "geown")
+	     (turn-on-auto-fill)
+	     (imenu-add-menubar-index)
+	     (gtags-mode t)
+	     ;;
+	     (setq c-noise-macro-names "[A-Z0-9_]+_EXPORT")
+	     ) ) )
 
 ;;
 ;; Add '*.txx' files to C++ style.
