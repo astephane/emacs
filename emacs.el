@@ -18,9 +18,10 @@
 ;; MS-Windows Emacs runemacs.bat
 ;;
 ;; @echo off
-;; REM call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools\VsDevCmd.bat"
 ;; call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
-;; C:\Users\FOO\emacs-26.3-x86_64\bin\runemacs.exe
+;; %USERPROFILE%\emacs-26.3-x86_64\bin\runemacs.exe
+;;
+;; Make a desktop shortcut running %USERPROFILE%\bin\runemacs.bat
 ;;
 
 
