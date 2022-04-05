@@ -150,6 +150,7 @@
    ;; Amount of basic offset.
    ;; Offset by 2 characters
    (c-basic-offset . 2)
+   (tab-width . 2)
    ;;
    (c-offsets-alist
     ;; ;;
