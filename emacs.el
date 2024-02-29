@@ -50,7 +50,7 @@
  '(global-linenum-mode t)
  '(global-linum-mode t)
  ;; Home
- '(package-selected-packages (quote (cmake-font-lock elgrep cmake-mode)))
+ '(package-selected-packages (quote (plantuml-mode yaml-mode cmake-font-lock elgrep cmake-mode)))
  ;; Work
  ;; '(package-selected-packages
  ;;   (quote
@@ -137,10 +137,23 @@
   ;; PlantUML
   ;; (see https://github.com/skuro/plantuml-mode?tab=readme-ov-file#quick-guide)
   ;; modes: `executable`, `jar`, `server`
+  ;;
+  ;; 2024-02-29:
+  ;; * PlantUML version is 1.2020.02 on Ubuntu 22.04 LTS.
+  ;; * Downloard & install the LGL package on PlantUML web site and install as below.
+  ;;
+  ;; /home/stepalbe/opt/local/
+  ;; ├── bin
+  ;; │   ├── plantuml
+  ;; └── share
+  ;;     └── plantuml
+  ;;         ├── plantuml-lgpl-1.2024.3.jar
+  ;;         └── plantuml.jar -> /home/stepalbe/opt/local/share/plantuml/plantuml-lgpl-1.2024.3.jar
   (setq plantuml-default-exec-mode 'executable)
-  (setq plantuml-jar-path "/usr/share/plantuml/plantuml.jar")
+  ;; (setq plantuml-jar-path "/usr/share/plantuml/plantuml.jar")
   ;; (setq plantuml-executable-path "/usr/bin/plantuml")
-  )
+  (setq plantuml-jar-path "~/opt/local/share/plantuml/plantuml.jar")
+  (setq plantuml-executable-path "~/opt/local/bin/plantuml")
  ;;
  ;; Default
  (t nil)
