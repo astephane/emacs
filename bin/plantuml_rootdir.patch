@@ -1,5 +1,5 @@
 --- /usr/bin/plantuml	2020-03-10 18:57:51.000000000 +0100
-+++ bin/plantuml	2024-02-29 13:24:57.106063939 +0100
++++ ./plantuml	2024-02-29 13:41:34.387730522 +0100
 @@ -29,4 +29,10 @@
  HEADLESS=
  [ -z "$DISPLAY" ] && HEADLESS=-Djava.awt.headless=true
@@ -10,5 +10,5 @@
 +then
 +    PLANTUML_ROOTDIR="${HOME}/opt/local/share"
 +fi
-+echo "PLANTUML_ROOTDIR=\"${PLANTUML_ROOTDIR}\""
++
 +$JAVA -Djava.net.useSystemProxies=true $HEADLESS -jar ${PLANTUML_ROOTDIR}/plantuml/plantuml.jar "$@"

@@ -34,5 +34,5 @@ if [ -z "${PLANTUML_ROOTDIR}" ]
 then
     PLANTUML_ROOTDIR="${HOME}/opt/local/share"
 fi
-echo "PLANTUML_ROOTDIR=\"${PLANTUML_ROOTDIR}\""
+
 $JAVA -Djava.net.useSystemProxies=true $HEADLESS -jar ${PLANTUML_ROOTDIR}/plantuml/plantuml.jar "$@"
