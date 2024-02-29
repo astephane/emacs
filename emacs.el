@@ -133,6 +133,13 @@
     )
   ;;
   (add-hook 'after-save-hook 'gtags-update-hook)
+  ;;
+  ;; PlantUML
+  ;; (see https://github.com/skuro/plantuml-mode?tab=readme-ov-file#quick-guide)
+  ;; modes: `executable`, `jar`, `server`
+  (setq plantuml-default-exec-mode 'executable)
+  (setq plantuml-jar-path "/usr/share/plantuml/plantuml.jar")
+  ;; (setq plantuml-executable-path "/usr/bin/plantuml")
   )
  ;;
  ;; Default
@@ -265,3 +272,6 @@
 ;;
 ;; Add '*.h' files to C++ style.
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode) )
+;;
+;; Add '*.puml' files to PlantUML style.
+(add-to-list 'auto-mode-alist '("\\.puml\\'" . plantuml-mode) )
