@@ -46,9 +46,9 @@
  ;; '(tab-width 4)
  '(gdb-many-windows t)
  '(global-hl-line-mode t)
- '(global-lh-line-mode t)
- '(global-linenum-mode t)
- '(global-linum-mode t)
+ ; '(global-linenum-mode t) ; obsolete
+ ; '(global-linum-mode t) ; obsolete
+ '(global-display-line-numbers-mode t)
  ;; Home
  '(package-selected-packages (quote (plantuml-mode yaml-mode cmake-font-lock elgrep cmake-mode)))
  ;; Work
